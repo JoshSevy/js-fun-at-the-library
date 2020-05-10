@@ -1,6 +1,3 @@
-// new library needs to take in a name
-  //needs to have shelves, genres shelves in nested Object
-
 function createLibrary(name) {
   return {
     name: name,
@@ -12,30 +9,35 @@ function createLibrary(name) {
 }
 
 function addBook(library, book) {
-  var fantasyShelf = library.shelves.fantasy;
-  var fictionShelf = library.shelves.fiction;
-  var nonFictionShelf = library.shelves.nonFiction;
-  // check if book is fantasy if true return push to fantasy array
   if(book.genre === "fantasy") {
-    return fantasyShelf.push(book);
-    //check if book is fiction if true return push to fiction array
+    return library.shelves.fantasy.push(book);
   } else if (book.genre === 'fiction') {
-    return fictionShelf.push(book);
-      //only 3 selves else to nonFiction return to nonFiction array
+    return library.shelves.fiction.push(book);
   } else {
-    return nonFictionShelf.push(book);
+    return library.shelves.nonFiction.push(book);
   }
-        //passing test reformat to make code cleaner
 };
 
-// check if each book shelf contians book
-  // remove book from shelf log check out message
-    // if book not on shelves return not available message
 function checkoutBook(library, book) {
+  var checkout = `You have now checked out ${book} from the ${library.name}`;
   for(var i = 0; i < library.shelves.fiction.length; i++) {
     if (book === library.shelves.fiction[i].title) {
       library.shelves.fiction.pop();
-      return `You have now checked out ${book} from the ${library.name}`;
+      return checkout;
+      }
+    }
+
+  for(var i = 0; i < library.shelves.fantasy.length; i++) {
+    if (book === library.shelves.fantasy[i].title) {
+      library.shelves.fantasy.pop();
+      return checkout;
+      }
+    }
+
+  for(var i = 0; i < library.shelves.nonFiction.length; i++) {
+    if (book === library.shelves.nonFiction[i].title) {
+      library.shelves.nonFiction.pop();
+      return checkout;
       }
     }
     return `Sorry, there are currently no copies of ${book} available at the ${library.name}`;
